@@ -1,4 +1,4 @@
-require 'faraday'
+require 'faraday_middleware'
 require File.expand_path('../resources/agenda_resource', __FILE__)
 require File.expand_path('../resources/event_resource', __FILE__)
 
@@ -14,8 +14,10 @@ module OpenAgenda
     end
 
     def connection
-      Faraday.new(connection_options) do |req|
-        req.adapter :net_http
+      Faraday.new(connection_options) do |conn|
+        conn.use FaradayMiddleware::Mashify
+        conn.response :json, :content_type => /\bjson$/
+        conn.adapter :net_http
       end
     end
 
