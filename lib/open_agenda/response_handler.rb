@@ -9,18 +9,27 @@ module OpenAgenda
       when "200"
         return body
       when "400"
-        raise BadRequestError
+        raise BadRequestError, message
       when "404"
-        raise NotFoundError
+        raise NotFoundError, message
       when "500"
-        raise InternalServerError
+        raise InternalServerError, message
       when /4\d{2}/
-        raise ClientError
+        raise ClientError, "#{status(body)} - #{message(body)}"
       when /5\d{2}/
-        raise ServerError
+        raise ServerError, "#{status(body)} - #{message(body)}"
       else
-        raise Error
+        raise Error, "#{status(body)} - #{message(body)}"
       end
     end
+
+    private
+      def message(body)
+        body.message || ''
+      end
+
+      def status(body)
+        body.code || ''
+      end
   end
 end
