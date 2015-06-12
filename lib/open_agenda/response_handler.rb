@@ -7,13 +7,13 @@ module OpenAgenda
 
       case status
       when "200"
-        return body
+        return body.data
       when "400"
-        raise BadRequestError, message
+        raise BadRequestError, message(body)
       when "404"
-        raise NotFoundError, message
+        raise NotFoundError, message(body)
       when "500"
-        raise InternalServerError, message
+        raise InternalServerError, message(body)
       when /4\d{2}/
         raise ClientError, "#{status(body)} - #{message(body)}"
       when /5\d{2}/
