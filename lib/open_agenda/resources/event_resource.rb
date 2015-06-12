@@ -16,6 +16,10 @@ module OpenAgenda
       action :get, :get, '/:uid' do
         with_api_public_key
       end
+
+      action :deleted, :get, '/deleted' do
+        with_api_public_key
+      end
     end
   end
 end
