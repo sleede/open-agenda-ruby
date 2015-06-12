@@ -1,7 +1,10 @@
 require 'open_agenda/path_builder'
+require 'open_agenda/response_handler'
 
 module OpenAgenda
   class Action
+    include ResponseHandler
+
     attr_reader :name, :verb, :path, :send_public_key
 
     def initialize(name, verb, path)
@@ -10,11 +13,12 @@ module OpenAgenda
 
     def invoke(connection, args)
       path_params, query_params = split_up_params(args)
-
       path_builder = PathBuilder.new(path, path_params)
 
       query_params[:key] = OpenAgenda.config.api_public_key if send_public_key
-      send(verb, connection, path_builder.build, query_params)
+      response = send(verb, connection, path_builder.build, query_params)
+
+      handle(response.body, response.body.code)
     end
 
     def get(connection, path, query_params = {})
