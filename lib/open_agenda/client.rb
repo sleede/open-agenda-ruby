@@ -4,7 +4,7 @@ require File.expand_path('../resources/agenda_resource', __FILE__)
 require File.expand_path('../resources/event_resource', __FILE__)
 require File.expand_path('../resources/location_resource', __FILE__)
 require File.expand_path('../response_handler', __FILE__)
-require 'json'
+require 'multi_json'
 
 module OpenAgenda
   class Client
@@ -23,7 +23,7 @@ module OpenAgenda
       secret_key = opts[:secret_key] || api_secret_key
       response = connection.post('requestAccessToken', { code: secret_key })
       data = handle(response.body, response.status, true)
-      parsed_data = JSON.parse(data)
+      parsed_data = MultiJson.load(data)
       @access_token = parsed_data['access_token']
       @expires_in = parsed_data['expires_in']
       puts "client :"+self.inspect
