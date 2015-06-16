@@ -2,12 +2,12 @@ require 'open_agenda/error'
 
 module OpenAgenda
   module ResponseHandler
-    def handle(body, status)
+    def handle(body, status, no_root_key = false)
       status = status.to_s
 
       case status
       when "200"
-        return body.data
+        return no_root_key ? body : body.data
       when "400"
         raise BadRequestError, message(body)
       when "404"

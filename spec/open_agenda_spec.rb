@@ -9,6 +9,8 @@ describe OpenAgenda do
       end
     end
 
-    it { expect(OpenAgenda.config).to respond_to(:api_key) }
+    it { expect(OpenAgenda.config).to respond_to(:api_secret_key) }
+    it { expect(OpenAgenda.config).to respond_to(:api_public_key) }
+    it { expect(OpenAgenda.config).to respond_to(:logger) }
   end
 end

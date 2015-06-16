@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'webmock'
 
+  spec.add_runtime_dependency('multi_json')
   spec.add_runtime_dependency('hashie', '3.4.1')
   spec.add_runtime_dependency('faraday_middleware')
 end

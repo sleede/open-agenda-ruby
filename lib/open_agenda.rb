@@ -14,10 +14,10 @@ module OpenAgenda
   end
 
   class Config
-    attr_accessor :api_public_key, :api_secret_key
+    attr_accessor :api_public_key, :api_secret_key, :logger
 
     def initialize
-      @api_public_key, @api_secret_key = nil, nil
+      @api_public_key, @api_secret_key, @logger = nil, nil, nil
     end
   end
 end

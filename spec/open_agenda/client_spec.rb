@@ -3,6 +3,11 @@ require 'spec_helper'
 describe OpenAgenda::Client do
   subject(:client) { described_class.new }
 
+  before do
+    OpenAgenda.configure do |config|
+    end
+  end
+
   it { expect(client.access_token).to be_nil }
   it { expect(client.expires_in).to be_nil }
 
